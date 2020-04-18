@@ -9,11 +9,11 @@ import com.cleanup.todoc.repository.TaskDataRepository;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class TaskViewmodel extends ViewModel {
+public class TaskViewModel extends ViewModel {
     private final TaskDataRepository taskDataSource;
     private final Executor executor;
 
-    public TaskViewmodel(TaskDataRepository taskDataSource, Executor executor) {
+    public TaskViewModel(TaskDataRepository taskDataSource, Executor executor) {
         this.taskDataSource = taskDataSource;
         this.executor = executor;
     }
