@@ -10,7 +10,7 @@ import com.cleanup.todoc.model.Task;
 @Database(entities = {Task.class}, version = 1, exportSchema = false)
 public abstract class ToDocDatabase extends RoomDatabase {
 
-    public static volatile ToDocDatabase INSTANCE;
+    private static volatile ToDocDatabase INSTANCE;
 
     public abstract TaskDao taskDao();
 
