@@ -9,12 +9,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class Injection {
-    public static TaskDataRepository provideTaskDataSource(Context context) {
+    private static TaskDataRepository provideTaskDataSource(Context context) {
         ToDocDatabase database = ToDocDatabase.getInstance(context);
         return new TaskDataRepository(database.taskDao());
     }
 
-    public static Executor provideExecutor() {
+    private static Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
     }
 
