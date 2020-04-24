@@ -15,15 +15,11 @@ public abstract class ToDocDatabase extends RoomDatabase {
 
     public abstract TaskDao taskDao();
 
-    public static ToDocDatabase getInstance(Context context) {
+    public static synchronized ToDocDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            synchronized (ToDocDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            ToDocDatabase.class, "todoc.db")
-                            .build();
-                }
-            }
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    ToDocDatabase.class, "todoc.db")
+                    .build();
         }
 
         return INSTANCE;

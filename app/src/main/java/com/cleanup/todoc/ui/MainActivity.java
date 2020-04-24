@@ -26,7 +26,6 @@ import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 import com.cleanup.todoc.ui.viewmodel.TaskViewModel;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -51,12 +50,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * The adapter which handles the list of tasks
      */
     private final TasksAdapter adapter = new TasksAdapter(this);
-
-    /**
-     * The sort method to be used to display tasks
-     */
-    @NonNull
-    private SortMethod sortMethod = SortMethod.NONE;
 
     /**
      * Dialog to create a new task
@@ -98,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
         setContentView(R.layout.activity_main);
         configureViewModel();
+        getTasks();
 
         listTasks = findViewById(R.id.list_tasks);
         lblNoTasks = findViewById(R.id.lbl_no_task);
@@ -119,17 +113,17 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         int id = item.getItemId();
 
         if (id == R.id.filter_alphabetical) {
-            sortMethod = SortMethod.ALPHABETICAL;
+            getTasksAlphabetically();
         } else if (id == R.id.filter_alphabetical_inverted) {
-            sortMethod = SortMethod.ALPHABETICAL_INVERTED;
+            getTasksAlphabeticallyInverted();
         } else if (id == R.id.filter_oldest_first) {
-            sortMethod = SortMethod.OLD_FIRST;
+            getTasksOldFirst();
         } else if (id == R.id.filter_recent_first) {
-            sortMethod = SortMethod.RECENT_FIRST;
+            getTasksRecentFirst();
         }
 
         // Get tasks in order to update the recyclerview
-         getTasks();
+        // getTasks();
 
         return super.onOptionsItemSelected(item);
     }
@@ -146,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
         ViewModelProvider viewModelProvider = new ViewModelProvider(this, viewModelFactory);
         this.taskViewModel = viewModelProvider.get(TaskViewModel.class);
-        getTasks();
     }
 
     /**
@@ -154,6 +147,34 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     private void getTasks(){
         this.taskViewModel.getTasks().observe(this, this::updateTasks);
+    }
+
+    /**
+     * Gets all the tasks alphabetically
+     */
+    private void getTasksAlphabetically(){
+        this.taskViewModel.getTasksAlphabetically().observe(this, this::updateTasks);
+    }
+
+    /**
+     * Gets all the tasks alphabetically inverted
+     */
+    private void getTasksAlphabeticallyInverted(){
+        this.taskViewModel.getTasksAlphabeticallyInverted().observe(this, this::updateTasks);
+    }
+
+    /**
+     * Gets all the tasks order by date of creation
+     */
+    private void getTasksRecentFirst(){
+        this.taskViewModel.getTasksRecentFirst().observe(this, this::updateTasks);
+    }
+
+    /**
+     * Gets all the tasks order by date of creation inverted
+     */
+    private void getTasksOldFirst(){
+        this.taskViewModel.getTasksOldFirst().observe(this, this::updateTasks);
     }
 
     /**
@@ -177,21 +198,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         } else {
             lblNoTasks.setVisibility(View.GONE);
             listTasks.setVisibility(View.VISIBLE);
-            switch (sortMethod) {
-                case ALPHABETICAL:
-                    Collections.sort(tasks, new Task.TaskAZComparator());
-                    break;
-                case ALPHABETICAL_INVERTED:
-                    Collections.sort(tasks, new Task.TaskZAComparator());
-                    break;
-                case RECENT_FIRST:
-                    Collections.sort(tasks, new Task.TaskRecentComparator());
-                    break;
-                case OLD_FIRST:
-                    Collections.sort(tasks, new Task.TaskOldComparator());
-                    break;
 
-            }
             adapter.updateTasks(tasks);
         }
     }
@@ -304,31 +311,5 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         if (dialogSpinner != null) {
             dialogSpinner.setAdapter(adapter);
         }
-    }
-
-    /**
-     * List of all possible sort methods for task
-     */
-    private enum SortMethod {
-        /**
-         * Sort alphabetical by name
-         */
-        ALPHABETICAL,
-        /**
-         * Inverted sort alphabetical by name
-         */
-        ALPHABETICAL_INVERTED,
-        /**
-         * Lastly created first
-         */
-        RECENT_FIRST,
-        /**
-         * First created first
-         */
-        OLD_FIRST,
-        /**
-         * No sort
-         */
-        NONE
     }
 }

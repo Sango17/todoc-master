@@ -18,6 +18,22 @@ public class TaskDataRepository {
         return this.taskDao.getTasks();
     }
 
+    public LiveData<List<Task>> getTasksAlphabetically() {
+        return this.taskDao.getTasksAlphabetically();
+    }
+
+    public LiveData<List<Task>> getTasksAlphabeticallyInverted() {
+        return this.taskDao.getTasksAlphabeticallyInverted();
+    }
+
+    public LiveData<List<Task>> getTasksRecentFirst() {
+        return this.taskDao.getTasksRecentFirst();
+    }
+
+    public LiveData<List<Task>> getTasksOldFirst() {
+        return this.taskDao.getTasksOldFirst();
+    }
+
     public void createTask(Task task) {
         this.taskDao.insertTask(task);
     }

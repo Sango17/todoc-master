@@ -22,6 +22,22 @@ public class TaskViewModel extends ViewModel {
         return taskDataSource.getTasks();
     }
 
+    public LiveData<List<Task>> getTasksAlphabetically() {
+        return taskDataSource.getTasksAlphabetically();
+    }
+
+    public LiveData<List<Task>> getTasksAlphabeticallyInverted() {
+        return taskDataSource.getTasksAlphabeticallyInverted();
+    }
+
+    public LiveData<List<Task>> getTasksRecentFirst() {
+        return taskDataSource.getTasksRecentFirst();
+    }
+
+    public LiveData<List<Task>> getTasksOldFirst() {
+        return taskDataSource.getTasksOldFirst();
+    }
+
     public void createTask(Task task) {
         executor.execute(() -> taskDataSource.createTask(task));
     }
