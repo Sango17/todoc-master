@@ -93,13 +93,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         configureViewModel();
         getTasks();
 
-        listTasks = findViewById(R.id.list_tasks);
-        lblNoTasks = findViewById(R.id.lbl_no_task);
+        setBinding();
 
-        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        listTasks.setAdapter(adapter);
+        setRecyclerView();
 
-        findViewById(R.id.fab_add_task).setOnClickListener(view -> showAddTaskDialog());
+        initClickListener();
     }
 
     @Override
@@ -122,9 +120,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             getTasksRecentFirst();
         }
 
-        // Get tasks in order to update the recyclerview
-        // getTasks();
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -140,6 +135,20 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         ViewModelFactory viewModelFactory = Injection.provideViewModelFactory(this);
         ViewModelProvider viewModelProvider = new ViewModelProvider(this, viewModelFactory);
         this.taskViewModel = viewModelProvider.get(TaskViewModel.class);
+    }
+
+    private void setBinding() {
+        listTasks = findViewById(R.id.list_tasks);
+        lblNoTasks = findViewById(R.id.lbl_no_task);
+    }
+
+    private void setRecyclerView() {
+        listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        listTasks.setAdapter(adapter);
+    }
+
+    private void initClickListener() {
+        findViewById(R.id.fab_add_task).setOnClickListener(view -> showAddTaskDialog());
     }
 
     /**

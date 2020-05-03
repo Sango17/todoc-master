@@ -87,7 +87,7 @@ public class Task {
      *
      * @param projectId the unique identifier of the project associated to the task to set
      */
-    public void setProjectId(long projectId) {
+    private void setProjectId(long projectId) {
         this.projectId = projectId;
     }
 
