@@ -2,8 +2,7 @@
 
 ToDoc est une application destinée aux collaborateurs de CleanUp afin faciliter leur travail, plus précisement la gestion de tâches.
 
-| ![](images/todoc_intro.png) |
-|:---:|:---:|:---:|
+![](images/todoc_intro.png)
 
 ## Installation
 Cloner ce repertoire et importer sur **Android Studio**
