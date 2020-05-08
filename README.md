@@ -7,7 +7,7 @@ ToDoc est une application destinée aux collaborateurs de CleanUp afin faciliter
 ## Installation
 Cloner ce repertoire et importer sur **Android Studio**
 ```bash
-git clone git@github.com:Sango17/MaReu.git
+git clone git@github.com:Sango17/todoc-master.git
 ```
 
 ## Fonctionnalités
