@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.cleanup.todoc.database.ToDocDatabase;
 import com.cleanup.todoc.ui.MainActivity;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +35,15 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityInstrumentedTest {
+
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
+
+    @After
+    public void closeDb() {
+        ToDocDatabase database = ToDocDatabase.getInstance(rule.getActivity());
+        database.taskDao().deleteTasks();
+    }
 
     @Test
     public void addAndRemoveTask() {
@@ -63,8 +72,6 @@ public class MainActivityInstrumentedTest {
 
     @Test
     public void sortTasks() {
-        MainActivity activity = rule.getActivity();
-
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));
         onView(withId(android.R.id.button1)).perform(click());

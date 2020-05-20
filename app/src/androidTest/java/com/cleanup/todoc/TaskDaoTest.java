@@ -20,7 +20,6 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class TaskDaoTest {
-
     private ToDocDatabase database;
 
     private static long PROJECT_ID_1 = 1;
