@@ -99,15 +99,23 @@ public class TaskDaoTest {
     public void deleteTaskFromTasks() throws InterruptedException {
         setTasks();
 
-        // Suppress one of three tasks
-        this.database.taskDao().deleteTask(TASK_DEMO_1.getId());
-
+        // Get the list of tasks
         List<Task> tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks());
-        Assert.assertEquals(tasks.get(0), TASK_DEMO_1);
+
+        // Check that TASK_DEMO_1 is at the top of the list
+        Assert.assertEquals(tasks.get(0).getName(), TASK_DEMO_1.getName());
+
+        // Suppress the first of the three tasks
+        this.database.taskDao().deleteTask(tasks.get(0).getId());
+
+        // Get the updated tasks' list
+        tasks = LiveDataTestUtil.getValue(this.database.taskDao().getTasks());
+
+        // Confirm that TASK_DEMO_1 is deleted
+        Assert.assertNotEquals(tasks.get(0).getName(), TASK_DEMO_1.getName());
     }
 
     private void setTasks(){
-
         try {
             this.database.taskDao().insertTask(TASK_DEMO_1);
             Thread.sleep(500);
